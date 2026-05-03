@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ thống Lịch trình DUT - Nhóm Lý, Hoàn, Đạt</title>
+    <style>
+        :root { --primary-color: #0866ff; --danger-color: #ff4d4d; --success-color: #28a745; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; margin: 0; padding: 20px; }
+        .container { max-width: 900px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .hidden { display: none !important; }
+        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .input-group { margin: 15px 0; }
+        .input-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        .btn { padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; color: white; }
+        .btn-login { background-color: var(--primary-color); width: 100%; }
+        .btn-save { background-color: var(--success-color); margin-top: 10px; }
+        .btn-logout { background-color: var(--danger-color); }
+        .app-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .app-table th, .app-table td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        .app-table th { background-color: #f8f9fa; }
+        .time-cell { line-height: 1.5; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- KHỐI 1: MÀN HÌNH ĐĂNG NHẬP (Hiện mặc định nếu chưa có session) -->
+    <div id="login-section">
+        <h2 style="text-align: center;">Đăng nhập hệ thống</h2>
+        <div class="input-group">
+            <label>Email:</label>
+            <input type="email" id="email" placeholder="Nhập email của bạn (Ví dụ: ly@dut.udn.vn)">
+        </div>
+        <div class="input-group">
+            <label>Mật khẩu:</label>
+            <input type="password" id="password" placeholder="Nhập mật khẩu">
+        </div>
+        <button class="btn btn-login" onclick="handleLogin()">ĐĂNG NHẬP</button>
+    </div>
+
+    <!-- KHỐI 2: MÀN HÌNH CHÍNH (Chỉ hiện sau khi checkLoginStatus thành công) -->
+    <div id="main-section" class="hidden">
+        <div class="header">
+            <h3>Chào, <span id="user-display" style="color: var(--primary-color);">--</span></h3>
+            <button class="btn btn-logout" onclick="handleLogout()">Đăng xuất</button>
+        </div>
+
+        <div style="background: #f9f9f9; padding: 15px; border-radius: 6px; margin-top: 20px;">
+            <h4>➕ Tạo cuộc hẹn mới</h4>
+            <div class="input-group">
+                <input type="text" id="title" placeholder="Tên cuộc hẹn (Ví dụ: Họp nhóm Đồ án)">
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <div style="flex: 1;">
+                    <label style="font-size: 12px;">Bắt đầu:</label>
+                    <input type="datetime-local" id="start">
+                </div>
+                <div style="flex: 1;">
+                    <label style="font-size: 12px;">Kết thúc:</label>
+                    <input type="datetime-local" id="end">
+                </div>
+            </div>
+            <button class="btn btn-save" onclick="submitAppointment()">Lưu cuộc hẹn</button>
+        </div>
+
+        <h4>📅 Lịch trình của bạn</h4>
+        <table class="app-table">
+            <thead>
+            <tr>
+                <th>Cuộc hẹn</th>
+                <th>Thời gian (Bắt đầu - Kết thúc)</th>
+                <th>Chủ trì</th>
+            </tr>
+            </thead>
+            <tbody id="app-body">
+            <!-- Dữ liệu đổ từ script.js -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Đảm bảo file script.js nằm cùng thư mục -->
+<script src="script.js"></script>
+
+</body>
+</html>
